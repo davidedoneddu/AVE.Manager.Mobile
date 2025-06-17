@@ -1,8 +1,10 @@
-package it.sal.disco.unimib.avemanager;
+package it.sal.disco.unimib.avemanager.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import it.sal.disco.unimib.avemanager.R;
 
 public class MainActivity extends AppCompatActivity {
 

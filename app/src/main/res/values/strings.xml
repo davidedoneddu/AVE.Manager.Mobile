@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AVE Manager</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="subtitle_welcome_back">Sign in to manage your events</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

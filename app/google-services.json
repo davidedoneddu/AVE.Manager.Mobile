@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030332909685",
+    "project_id": "ave-manager",
+    "storage_bucket": "ave-manager.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030332909685:android:c8e5a364dcc3d5f522103c",
+        "android_client_info": {
+          "package_name": "it.sal.disco.unimib.avemanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5Qyq9izvTVQYf1vsnzM1OCuBpZb1ukO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

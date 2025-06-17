@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import it.sal.disco.unimib.avemanager.R;
+import it.sal.disco.unimib.avemanager.ui.activity.EnvironmentSelectionActivity;
 import it.sal.disco.unimib.avemanager.ui.activity.MainActivity;
 import it.sal.disco.unimib.avemanager.ui.viewmodel.LoginViewModel;
 
@@ -52,7 +53,7 @@ public class SignInFragment extends Fragment {
             switch (state) {
                 case SUCCESS:
                     // Login avvenuto con successo
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), EnvironmentSelectionActivity.class);
                     startActivity(intent);
                     requireActivity().finish();
                     break;

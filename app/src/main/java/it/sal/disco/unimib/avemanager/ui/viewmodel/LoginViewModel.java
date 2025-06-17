@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import it.sal.disco.unimib.avemanager.domain.repository.AuthRepository;
+import it.sal.disco.unimib.avemanager.data.repository.AuthRepository;
 
 public class LoginViewModel extends ViewModel {
 

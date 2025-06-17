@@ -1,4 +1,4 @@
-package it.sal.disco.unimib.avemanager.domain.repository;
+package it.sal.disco.unimib.avemanager.data.repository;
 
 public class AuthRepository {
 

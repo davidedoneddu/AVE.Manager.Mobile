@@ -7,6 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="-0.1" />
     <!-- Background image -->
     <ImageView
         android:id="@+id/image_background"
@@ -47,23 +54,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/image_background"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/top_guideline"
+        app:layout_constraintVertical_bias="0.0"
+        />
 
     <ImageView
         android:id="@+id/text_logo"
-        android:layout_width="413dp"
-        android:layout_height="298dp"
-        android:gravity="center"
-        android:lineSpacingExtra="4dp"
-        android:scaleType="centerCrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/logo_welcome"
-        app:layout_constraintBottom_toTopOf="@+id/button_enter"
-        app:layout_constraintEnd_toEndOf="@+id/image_background"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/image_background"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.769" />
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintDimensionRatio="H,413:298"
+        app:layout_constraintTop_toTopOf="@+id/radial_underlay"
+        app:layout_constraintBottom_toBottomOf="@+id/radial_underlay"
+        app:layout_constraintStart_toStartOf="@+id/radial_underlay"
+        app:layout_constraintEnd_toEndOf="@+id/radial_underlay"
+
+        />
 
     <Button
         android:id="@+id/button_enter"

@@ -1,19 +1,18 @@
 package it.sal.disco.unimib.avemanager.ui.model;
 
-public class Organization {
+public class Evento {
     private String id;
     private String name;
     private String description;
-    private String imageUrl;
 
-    public Organization() {
+    public Evento() {
         // costruttore vuoto per serializzazione/deserializzazione
     }
 
-    public Organization(String id, String name, String imageUrl) {
+    public Evento(String id, String name, String description) {
         this.id = id;
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.description = description;
     }
 
     // Getter e setter
@@ -33,12 +32,12 @@ public class Organization {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getDescription() {
+        return description;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     // toString utile per debug
@@ -47,7 +46,7 @@ public class Organization {
         return "Organization{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

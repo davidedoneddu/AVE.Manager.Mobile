@@ -9,8 +9,10 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import it.sal.disco.unimib.avemanager.R;
 
+@AndroidEntryPoint
 public class LoginPageActivity extends AppCompatActivity {
 
     private TextInputEditText emailEditText, passwordEditText;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_invitati"
+        android:icon="@drawable/ic_group"
+        android:title="Invitati" />
+
+    <!-- Voce centrale vuota, icona e titolo nulli per fare spazio al FAB -->
+    <item
+        android:id="@+id/nav_empty"
+        android:enabled="false"
+        android:icon="@android:color/transparent"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_event_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Parametri" />
+    <item
+        android:id="@+id/nav_help"
+        android:icon="@drawable/ic_contact_support"
+        android:title="Help" />
+</menu>

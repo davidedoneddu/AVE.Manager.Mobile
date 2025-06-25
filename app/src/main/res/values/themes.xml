@@ -1,5 +1,6 @@
 <resources>
     <style name="Theme.AVEManagerMobile" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorSuccess">@color/md_theme_success</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
@@ -46,9 +47,12 @@
         <item name="colorSurfaceContainer">@color/md_theme_surfaceContainer</item>
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
-        <item name="colorCustomColor1">@color/colorCustomColor1</item>
-        <item name="colorOnCustomColor1">@color/colorOnCustomColor1</item>
-        <item name="colorCustomColor1Container">@color/colorCustomColor1Container</item>
-        <item name="colorOnCustomColor1Container">@color/colorOnCustomColor1Container</item>
+        <item name="colorFocus">@color/colorFocus</item>
+        <item name="colorOnFocus">@color/colorOnFocus</item>
+        <item name="colorFocusContainer">@color/colorFocusContainer</item>
+        <item name="colorOnFocusContainer">@color/colorOnFocusContainer</item>
+
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="fontFamily">@font/lato</item>
     </style>
 </resources>

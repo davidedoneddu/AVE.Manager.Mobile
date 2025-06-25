@@ -26,7 +26,7 @@ import it.sal.disco.unimib.avemanager.ui.model.Organization;
 import it.sal.disco.unimib.avemanager.ui.viewmodel.OrganizationViewModel;
 
 @AndroidEntryPoint
-public class EnvironmentSelectionFragment extends Fragment {
+public class OrganizationSelectionFragment extends Fragment {
 
     private OrganizationViewModel viewModel ; // Usa viewModels() se puoi
     private OrganizationAdapter adapter;

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import it.sal.disco.unimib.avemanager.R;
-import it.sal.disco.unimib.avemanager.ui.activity.HomePageActivity;
+import it.sal.disco.unimib.avemanager.ui.activity.EventMainActivity;
 import it.sal.disco.unimib.avemanager.ui.model.Evento;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
@@ -46,7 +46,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
         holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
-            Intent intent = new Intent(context, HomePageActivity.class);
+            Intent intent = new Intent(context, EventMainActivity.class);
 
             context.startActivity(intent);
         });

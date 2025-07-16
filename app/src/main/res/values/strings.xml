@@ -18,5 +18,14 @@
     <string name="card_3_title">Voti</string>
     <string name="card_2_title">Votanti</string>
     <string name="card_1_title">Invitati</string>
+    <string name="ragione_sociale">Ragione sociale</string>
+    <string name="salva">Salva</string>
+    <string name="seleziona_l_associazione">Seleziona l\'associazione</string>
+    <string name="vedrai_gli_eventi_disponibili_solo_di_quella_scelta">Vedrai gli eventi disponibili solo di quella scelta</string>
+    <string name="quorum">Quorum</string>
+    <string name="avatarimage">avatarImage</string>
+    <string name="cognome_nome">Cognome Nome</string>
+    <string name="_0">0%</string>
+    <string name="stato_del_quorum">Stato del quorum</string>
 
 </resources>

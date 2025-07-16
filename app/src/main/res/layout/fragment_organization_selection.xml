@@ -25,7 +25,7 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Seleziona l'associazione"
+                android:text="@string/seleziona_l_associazione"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 android:textColor="?attr/colorPrimary"
                 />
@@ -34,21 +34,16 @@
                 android:id="@+id/textViewSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vedrai gli eventi disponibili solo di quella scelta"
+                android:text="@string/vedrai_gli_eventi_disponibili_solo_di_quella_scelta"
                 android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                 android:textColor="?attr/colorPrimaryVariant"
                 />
 
         </LinearLayout>
 
-<!--        &lt;!&ndash; RecyclerView &ndash;&gt;-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recyclerViewOrganizations"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_weight="1" />-->
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

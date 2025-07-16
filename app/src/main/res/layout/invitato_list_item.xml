@@ -33,7 +33,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_circle_success"
-                android:contentDescription="avatarImage"
+                android:contentDescription="@string/avatarimage"
                 app:tint="?attr/colorOnSurfaceVariant"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginEnd="12dp" />
@@ -48,7 +48,7 @@
                     android:id="@+id/nomeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cognome Nome"
+                    android:text="@string/cognome_nome"
                     android:textAppearance="?attr/textAppearanceTitleMedium"
                     android:textColor="?attr/colorOnSurface" />
 
@@ -56,7 +56,7 @@
                     android:id="@+id/aziendaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ragione sociale"
+                    android:text="@string/ragione_sociale"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?attr/colorOnSurfaceVariant" />
             </LinearLayout>

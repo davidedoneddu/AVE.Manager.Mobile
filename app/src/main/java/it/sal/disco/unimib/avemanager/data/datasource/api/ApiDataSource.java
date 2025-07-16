@@ -159,7 +159,8 @@ public class ApiDataSource {
     public void fetchImage(String fileName, DataCallback<Bitmap> callback) {
         apiService.downloadImage(fileName).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(@NonNullCall<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call,
+                                   @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     InputStream inputStream = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
@@ -170,7 +171,7 @@ public class ApiDataSource {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 callback.onFailure(t);
             }
         });
@@ -200,7 +201,7 @@ public class ApiDataSource {
         checkInRequestDTO.setCodice(code);
         apiService.doCheckIn(checkInRequestDTO).enqueue(new Callback<BaseResponseDTO>() {
             @Override
-            public void onResponse(Call<BaseResponseDTO> call, Response<BaseResponseDTO> response) {
+            public void onResponse(@NonNull Call<BaseResponseDTO> call, @NonNull Response<BaseResponseDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     if(!response.body().isOk()){
                         callback.onFailure(new Exception(response.body().getErrorMessage()));
@@ -214,7 +215,7 @@ public class ApiDataSource {
             }
 
             @Override
-            public void onFailure(Call<BaseResponseDTO> call, Throwable t) {
+            public void onFailure(@NonNull Call<BaseResponseDTO> call, @NonNull Throwable t) {
                 callback.onFailure(new Exception("Errore durante il check in"));
             }
         });

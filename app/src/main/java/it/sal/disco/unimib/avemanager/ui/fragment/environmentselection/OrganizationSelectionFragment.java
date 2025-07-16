@@ -59,9 +59,7 @@ public class OrganizationSelectionFragment extends Fragment {
             // Naviga al fragment successivo usando NavController
             NavController navController = Navigation.findNavController(view);
             navController.navigate(R.id.action_to_selectEvent);
-        }, (orgId, callback) -> {
-            viewModel.getOrganizationImage(orgId, callback);
-        });
+        }, (orgId, callback) -> viewModel.getOrganizationImage(orgId, callback));
 
         recyclerView.setAdapter(adapter);
 
@@ -76,9 +74,7 @@ public class OrganizationSelectionFragment extends Fragment {
                 sharedViewModel.setSelectedOrganization(org);
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.action_to_selectEvent);
-            }, (orgId, callback) -> {
-                viewModel.getOrganizationImage(orgId, callback);
-            });
+            }, (orgId, callback) -> viewModel.getOrganizationImage(orgId, callback));
             recyclerView.setAdapter(adapter);
 
         });

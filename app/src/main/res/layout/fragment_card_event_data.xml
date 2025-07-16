@@ -20,7 +20,7 @@
             android:id="@+id/voteTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quorum"
+            android:text="@string/quorum"
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceTitleMedium"
             android:textColor="?attr/colorPrimary"
@@ -53,7 +53,7 @@
                 android:id="@+id/centerText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0%"
+                android:text="@string/_0"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorOnSurfaceVariant"
@@ -73,7 +73,7 @@
             android:maxLines="2"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="Stato del quorum" />
+            android:text="@string/stato_del_quorum" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

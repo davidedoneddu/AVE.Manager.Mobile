@@ -25,7 +25,6 @@ import it.sal.disco.unimib.avemanager.ui.viewmodel.EventDataViewModel;
 public class HomePageFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private MaterialButton reloadButton;
     private EventDataViewModel viewModel;
 
     // TextView delle 3 card
@@ -61,17 +60,10 @@ public class HomePageFragment extends Fragment {
         votiTitle = view.findViewById(R.id.votiTitle);
         votiDesc = view.findViewById(R.id.votiDesc);
 
-        reloadButton = view.findViewById(R.id.reloadQuorumBtn);
-        reloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.loadEventData();
-            }
-        });
+        MaterialButton reloadButton = view.findViewById(R.id.reloadQuorumBtn);
+        reloadButton.setOnClickListener(v -> viewModel.loadEventData());
 
-        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
-            swipeRefreshLayout.setRefreshing(isLoading);
-        });
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> swipeRefreshLayout.setRefreshing(isLoading));
 
         viewModel.getEventData().observe(getViewLifecycleOwner(), this::onChanged);
 

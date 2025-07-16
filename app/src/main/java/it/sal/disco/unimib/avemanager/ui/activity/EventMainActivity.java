@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +28,8 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import it.sal.disco.unimib.avemanager.R;
 import it.sal.disco.unimib.avemanager.ui.fragment.mainactivity.CheckInFragment;
@@ -41,7 +42,7 @@ import it.sal.disco.unimib.avemanager.ui.viewmodel.LoginViewModel;
 @AndroidEntryPoint
 public class EventMainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
+    public BottomNavigationView bottomNavigationView;
     private FloatingActionButton fabScanQr;
     private AppBarLayout topBar;
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 1001;
@@ -54,27 +55,27 @@ public class EventMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_main);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            );
-            window.setStatusBarColor(Color.TRANSPARENT);
-            View decor = getWindow().getDecorView();
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-            Drawable background = bottomNavigationView.getBackground();
+        Window window = getWindow();
+        window.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+        window.setStatusBarColor(Color.TRANSPARENT);
+        View decor = getWindow().getDecorView();
+        decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-            if (background instanceof ColorDrawable) {
-                int color = ((ColorDrawable) background).getColor();
-                window.setNavigationBarColor(color);
-            }else{
-                bottomNavigationView.setBackgroundColor(Color.parseColor("#F0F0F0"));
-            }
+        AtomicReference<BottomNavigationView> bottomNavigationView = new AtomicReference<>(findViewById(R.id.bottom_navigation));
+        Drawable background = bottomNavigationView.get().getBackground();
 
+        if (background instanceof ColorDrawable) {
+            int color = ((ColorDrawable) background).getColor();
+            window.setNavigationBarColor(color);
+        }else{
+            bottomNavigationView.get().setBackgroundColor(Color.parseColor("#F0F0F0"));
         }
+
+
 
         //gestione APP BAR con titolo e sottotitolo e click impostazioni
         TextView titleText = findViewById(R.id.titleText);
@@ -83,6 +84,7 @@ public class EventMainActivity extends AppCompatActivity {
         // Recupera i dati passati dall'intent
         String orgName = getIntent().getStringExtra("org_name");
         String eventName = getIntent().getStringExtra("event_name");
+
 
         // Imposta i TextView direttamente
         if (orgName != null) {
@@ -93,29 +95,27 @@ public class EventMainActivity extends AppCompatActivity {
             subtitleText.setText(eventName);
         }
         ImageButton logoutBtn = findViewById(R.id.logoutButton);
-        logoutBtn.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Logout")
-                    .setMessage("Sei sicuro di voler effettuare il logout?")
-                    .setPositiveButton("Sì", (dialog, which) -> {
+        logoutBtn.setOnClickListener(v -> new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Sei sicuro di voler effettuare il logout?")
+                .setPositiveButton("Sì", (dialog, which) -> {
 
-                        invalidateSession(); // metodo per invalidare la sessione utente
+                    invalidateSession(); // metodo per invalidare la sessione utente
 
-                        // Torna alla LoginActivity svuotando lo stack
-                        Intent intent = new Intent(this, LoginPageActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    })
-                    .setNegativeButton("Annulla", null)
-                    .show();
-        });
+                    // Torna alla LoginActivity svuotando lo stack
+                    Intent intent = new Intent(this, LoginPageActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Annulla", null)
+                .show());
 
         //gestione bottom navigation bar con apertura lettore QR
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.set(findViewById(R.id.bottom_navigation));
         fabScanQr = findViewById(R.id.fabScanQr);
         topBar = findViewById(R.id.appBarLayout);
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+        bottomNavigationView.get().setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 openFragment(new HomePageFragment());
@@ -145,41 +145,41 @@ public class EventMainActivity extends AppCompatActivity {
         getSupportFragmentManager().addOnBackStackChangedListener(() -> {
 
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-
+            bottomNavigationView.set(findViewById(R.id.bottom_navigation));
             if (currentFragment == null) {
 
                 // Nessun fragment attualmente visibile
                 closeFullScreen();
-                bottomNavigationView.getMenu().setGroupCheckable(0, false, true); // deseleziona tutto
+                bottomNavigationView.get().getMenu().setGroupCheckable(0, false, true); // deseleziona tutto
                 return;
             }
 
             if (currentFragment instanceof HomePageFragment) {
                 closeFullScreen();
-                if (bottomNavigationView.getSelectedItemId() != R.id.nav_home) {
-                    bottomNavigationView.setSelectedItemId(R.id.nav_home);
+                if (bottomNavigationView.get().getSelectedItemId() != R.id.nav_home) {
+                    bottomNavigationView.get().setSelectedItemId(R.id.nav_home);
                 }
             } else if (currentFragment instanceof ManageInvitatiFragment) {
                 closeFullScreen();
-                if (bottomNavigationView.getSelectedItemId() != R.id.nav_invitati) {
-                    bottomNavigationView.setSelectedItemId(R.id.nav_invitati);
+                if (bottomNavigationView.get().getSelectedItemId() != R.id.nav_invitati) {
+                    bottomNavigationView.get().setSelectedItemId(R.id.nav_invitati);
                 }
             } else if (currentFragment instanceof EventSettingsFragment) {
                 closeFullScreen();
-                if (bottomNavigationView.getSelectedItemId() != R.id.nav_event_settings) {
-                    bottomNavigationView.setSelectedItemId(R.id.nav_event_settings);
+                if (bottomNavigationView.get().getSelectedItemId() != R.id.nav_event_settings) {
+                    bottomNavigationView.get().setSelectedItemId(R.id.nav_event_settings);
                 }
             } else if (currentFragment instanceof HelpFragment) {
                 closeFullScreen();
-                if (bottomNavigationView.getSelectedItemId() != R.id.nav_help) {
-                    bottomNavigationView.setSelectedItemId(R.id.nav_help);
+                if (bottomNavigationView.get().getSelectedItemId() != R.id.nav_help) {
+                    bottomNavigationView.get().setSelectedItemId(R.id.nav_help);
                 }
             } else if (currentFragment instanceof CheckInFragment) {
                 openFullScreen();
             } else {
                 // Nel caso ci siano altri fragment o full screen nascosto
                 closeFullScreen();
-                bottomNavigationView.getMenu().setGroupCheckable(0, false, true); // opzionale per deselezionare tutti
+                bottomNavigationView.get().getMenu().setGroupCheckable(0, false, true); // opzionale per deselezionare tutti
             }
         });
 

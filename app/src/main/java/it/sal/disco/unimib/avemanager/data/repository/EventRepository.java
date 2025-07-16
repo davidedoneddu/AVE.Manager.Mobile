@@ -1,7 +1,5 @@
 package it.sal.disco.unimib.avemanager.data.repository;
 
-import android.os.Handler;
-import android.os.Looper;
 
 import java.util.List;
 
@@ -22,7 +20,6 @@ import it.sal.disco.unimib.avemanager.util.DataCallback;
 @Singleton
 public class EventRepository {
 
-    private final Handler handler = new Handler(Looper.getMainLooper());
     private final ApiDataSource apiDataSource;
 
     @Inject

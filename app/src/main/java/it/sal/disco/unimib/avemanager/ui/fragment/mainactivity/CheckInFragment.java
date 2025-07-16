@@ -43,7 +43,6 @@ public class CheckInFragment extends Fragment {
     private PreviewView previewView;
     private CheckInViewModel viewModel;
     private boolean isProcessing = false;
-    private FloatingActionButton backButton;
 
 
     @Override
@@ -87,12 +86,10 @@ public class CheckInFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         previewView = view.findViewById(R.id.previewView);
-        backButton = view.findViewById(R.id.backButton);
+        FloatingActionButton backButton = view.findViewById(R.id.backButton);
 
         backButton.setEnabled(false);
-        backButton.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        });
+        backButton.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
         backButton.setEnabled(true);
 
         viewModel = new ViewModelProvider(this).get(CheckInViewModel.class);
@@ -134,8 +131,8 @@ public class CheckInFragment extends Fragment {
                 cameraProvider.unbindAll();
                 cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, analysis);
 
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
+            } catch (ExecutionException | InterruptedException ignored) {
+
             }
         }, ContextCompat.getMainExecutor(requireContext()));
     }
@@ -156,7 +153,7 @@ public class CheckInFragment extends Fragment {
                     boolean foundCode = false;
                     for (Barcode barcode : barcodes) {
                         String code = barcode.getRawValue();
-                        if (code != null && !foundCode) {
+                        if (code != null) {
                             foundCode = true;
                             viewModel.checkInWithQr(code);
                             break;

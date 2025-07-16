@@ -24,7 +24,6 @@ public class EventDataMapper implements Mapper<EventDataResponseDTO, EventData> 
 
     @Override
     public EventDataResponseDTO toDTO(EventData eventData) {
-        EventDataResponseDTO dto = new EventDataResponseDTO();
-        return dto;
+        return new EventDataResponseDTO();
     }
 }

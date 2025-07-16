@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.Objects;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import it.sal.disco.unimib.avemanager.databinding.FragmentAziendaBinding;
 import it.sal.disco.unimib.avemanager.ui.viewmodel.InvitatiViewModel;
@@ -36,54 +38,54 @@ public class AziendaFragment extends Fragment {
 
         viewModel.getCurrentInvitato().observe(getViewLifecycleOwner(), invitato -> {
             if (invitato != null) {
-                binding.etSocieta.getEditText().setText(invitato.getInvSocieta());
-                binding.etRagSoc.getEditText().setText(invitato.getInvRagSoc());
-                binding.etIndirizzo.getEditText().setText(invitato.getInvIndirizzo());
-                binding.etCap.getEditText().setText(invitato.getInvCap());
-                binding.etCitta.getEditText().setText(invitato.getInvCitta());
-                binding.etProvincia.getEditText().setText(invitato.getInvProvincia());
+                Objects.requireNonNull(binding.etSocieta.getEditText()).setText(invitato.getInvSocieta());
+                Objects.requireNonNull(binding.etRagSoc.getEditText()).setText(invitato.getInvRagSoc());
+                Objects.requireNonNull(binding.etIndirizzo.getEditText()).setText(invitato.getInvIndirizzo());
+                Objects.requireNonNull(binding.etCap.getEditText()).setText(invitato.getInvCap());
+                Objects.requireNonNull(binding.etCitta.getEditText()).setText(invitato.getInvCitta());
+                Objects.requireNonNull(binding.etProvincia.getEditText()).setText(invitato.getInvProvincia());
             }
         });
 
-        binding.etSocieta.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etSocieta.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvSocieta(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvSocieta(s.toString());
             }
         });
 
-        binding.etRagSoc.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etRagSoc.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvRagSoc(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvRagSoc(s.toString());
             }
         });
 
-        binding.etIndirizzo.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etIndirizzo.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvIndirizzo(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvIndirizzo(s.toString());
             }
         });
 
-        binding.etCap.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etCap.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvCap(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvCap(s.toString());
             }
         });
 
-        binding.etCitta.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etCitta.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvCitta(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvCitta(s.toString());
             }
         });
 
-        binding.etProvincia.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etProvincia.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvProvincia(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvProvincia(s.toString());
             }
         });
     }

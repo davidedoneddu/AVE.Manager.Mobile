@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.Objects;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import it.sal.disco.unimib.avemanager.databinding.FragmentAnagraficaBinding;
 import it.sal.disco.unimib.avemanager.ui.viewmodel.InvitatiViewModel;
@@ -36,39 +38,39 @@ public class AnagraficaFragment extends Fragment {
 
         viewModel.getCurrentInvitato().observe(getViewLifecycleOwner(), invitato -> {
             if (invitato != null) {
-                binding.etCognome.getEditText().setText(invitato.getInvCognome());
-                binding.etNome.getEditText().setText(invitato.getInvNome());
-                binding.etCortesia.getEditText().setText(invitato.getInvCortesia());
-                binding.etTitolo.getEditText().setText(invitato.getInvTitolo());
+                Objects.requireNonNull(binding.etCognome.getEditText()).setText(invitato.getInvCognome());
+                Objects.requireNonNull(binding.etNome.getEditText()).setText(invitato.getInvNome());
+                Objects.requireNonNull(binding.etCortesia.getEditText()).setText(invitato.getInvCortesia());
+                Objects.requireNonNull(binding.etTitolo.getEditText()).setText(invitato.getInvTitolo());
             }
         });
 
         // Aggiorna ViewModel quando cambia testo
-        binding.etCognome.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etCognome.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvCognome(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvCognome(s.toString());
             }
         });
 
-        binding.etNome.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etNome.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvNome(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvNome(s.toString());
             }
         });
 
-        binding.etCortesia.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etCortesia.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvCortesia(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvCortesia(s.toString());
             }
         });
 
-        binding.etTitolo.getEditText().addTextChangedListener(new SimpleTextWatcher() {
+        Objects.requireNonNull(binding.etTitolo.getEditText()).addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.getCurrentInvitato().getValue().setInvTitolo(s.toString());
+                Objects.requireNonNull(viewModel.getCurrentInvitato().getValue()).setInvTitolo(s.toString());
             }
         });
     }

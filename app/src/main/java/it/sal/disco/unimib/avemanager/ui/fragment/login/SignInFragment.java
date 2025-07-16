@@ -25,7 +25,6 @@ public class SignInFragment extends Fragment {
 
     private EditText editTextName;
     private EditText editTextPassword;
-    private Button buttonLogin;
     private FrameLayout loadingOverlay;
 
     private LoginViewModel loginViewModel;
@@ -42,7 +41,7 @@ public class SignInFragment extends Fragment {
 
         editTextName = view.findViewById(R.id.editTextName);
         editTextPassword = view.findViewById(R.id.editTextPassword);
-        buttonLogin = view.findViewById(R.id.buttonLogin);
+        Button buttonLogin = view.findViewById(R.id.buttonLogin);
         loadingOverlay = view.findViewById(R.id.loadingOverlay);
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);

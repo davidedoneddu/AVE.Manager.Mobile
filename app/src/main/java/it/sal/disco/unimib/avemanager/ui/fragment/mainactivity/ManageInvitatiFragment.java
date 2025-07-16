@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -46,8 +45,6 @@ import it.sal.disco.unimib.avemanager.util.OnInvitatoActionListener;
 @AndroidEntryPoint
 public class ManageInvitatiFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private TextView searchEditText;
     private InvitatiAdapter adapter;
     private InvitatiViewModel viewModel;
     private CheckInViewModel checkInViewModel;
@@ -64,7 +61,7 @@ public class ManageInvitatiFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manage_invitati, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerViewInvitati);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewInvitati);
         layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -77,15 +74,9 @@ public class ManageInvitatiFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = getItemTouchHelper();
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        // Osserva lista invitati
-        viewModel.getInvitatiLiveData().observe(getViewLifecycleOwner(), invitati -> {
-            adapter.submitList(new ArrayList<>(invitati), false);
-        });
+        viewModel.getInvitatiLiveData().observe(getViewLifecycleOwner(), invitati -> adapter.submitList(new ArrayList<>(invitati), false));
 
-        // Osserva loading e lastPage dal ViewModel
-        viewModel.getIsLoading().observe(getViewLifecycleOwner(), loading -> {
-            swipeRefreshLayout.setRefreshing(loading);
-        });
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), loading -> swipeRefreshLayout.setRefreshing(loading));
 
         // Scroll listener per lazy load
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -103,7 +94,7 @@ public class ManageInvitatiFragment extends Fragment {
             }
         });
         // Gestione ricerca invitati con debounce semplice
-        searchEditText = view.findViewById(R.id.searchEditText);
+        TextView searchEditText = view.findViewById(R.id.searchEditText);
         searchEditText.addTextChangedListener(new TextWatcher() {
             private Runnable searchRunnable;
             private final android.os.Handler handler = new android.os.Handler();
@@ -155,7 +146,6 @@ public class ManageInvitatiFragment extends Fragment {
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             private float startX;
             private float startY;
-            private boolean isHorizontalScroll;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -163,7 +153,6 @@ public class ManageInvitatiFragment extends Fragment {
                     case MotionEvent.ACTION_DOWN:
                         startX = event.getX();
                         startY = event.getY();
-                        isHorizontalScroll = false;
                         swipeRefreshLayout.setEnabled(true);
                         break;
 
@@ -173,10 +162,8 @@ public class ManageInvitatiFragment extends Fragment {
 
                         if (dy > 50 && dx < 10)  {
 
-                            isHorizontalScroll = false;
                             swipeRefreshLayout.setEnabled(true);
                         } else {
-                            isHorizontalScroll = true;
                             swipeRefreshLayout.setEnabled(false);
                         }
                         break;
@@ -192,9 +179,7 @@ public class ManageInvitatiFragment extends Fragment {
         });
 
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            viewModel.refresh();
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> viewModel.refresh());
 
         //gestione add
         FloatingActionButton buttonAdd = view.findViewById(R.id.buttonAdd);
@@ -218,9 +203,7 @@ public class ManageInvitatiFragment extends Fragment {
                 new AlertDialog.Builder(requireContext())
                         .setTitle("Elimina Invitato")
                         .setMessage("Sei sicuro di voler eliminare " + invitato.getInvNome() +" "+ invitato.getInvCognome()+"?")
-                        .setPositiveButton("Sì", (dialog, which) -> {
-                            viewModel.deleteInvitato(invitato);
-                        })
+                        .setPositiveButton("Sì", (dialog, which) -> viewModel.deleteInvitato(invitato))
                         .setNegativeButton("Annulla", null)
                         .show();
             }
@@ -242,9 +225,9 @@ public class ManageInvitatiFragment extends Fragment {
     private @NonNull ItemTouchHelper getItemTouchHelper() {
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-            private final ColorDrawable background = new ColorDrawable();
-            private final int backgroundColor = ContextCompat.getColor(requireContext(), R.color.md_theme_primary); // colore primario
-            private final Drawable icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_qr_code_scanner); // icona chiamata (scegli la tua)
+
+            private final int backgroundColor = ContextCompat.getColor(requireContext(), R.color.md_theme_primary);
+            private final Drawable icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_qr_code_scanner);
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView,
@@ -279,16 +262,7 @@ public class ManageInvitatiFragment extends Fragment {
                 View itemView = viewHolder.itemView;
 
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    // Limita lo swipe in modo che non superi il margine sinistro
-                    float marginLeftPx = TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_DIP,
-                            8,
-                            itemView.getResources().getDisplayMetrics());
 
-                    // dX negativo per swipe a sinistra, limitato a -marginLeftPx
-                    float limitedDX = Math.max(dX, -itemView.getWidth() + marginLeftPx);
-
-                    // Disegna background con rounded corners, sempre sotto il card
                     float cornerRadius = TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
                             16,
@@ -306,7 +280,6 @@ public class ManageInvitatiFragment extends Fragment {
 
                     c.drawRoundRect(backgroundRect, cornerRadius, cornerRadius, paint);
 
-                    // Disegna icona a destra
                     assert icon != null;
                     int iconTop = itemView.getTop() + (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
                     int iconMargin = (int) TypedValue.applyDimension(
@@ -319,13 +292,8 @@ public class ManageInvitatiFragment extends Fragment {
                     icon.setBounds(iconLeft, iconTop, iconRight, iconBottom);
                     icon.draw(c);
 
-                    // Calcola margine sinistro iniziale della card
                     int originalLeft = itemView.getLeft();
-
-                    // Salva stato canvas per clipping
                     int saveCount = c.save();
-
-                    // Crea un path con bordi arrotondati per il clip
                     float radius = TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
                             16,
@@ -340,12 +308,8 @@ public class ManageInvitatiFragment extends Fragment {
                     );
                     clipPath.addRoundRect(clipRect, radius, radius, Path.Direction.CW);
                     c.clipPath(clipPath);
-
-                    // Imposta opacità proporzionale allo swipe
                     float alpha = 1.0f - Math.min(1.0f, Math.abs(dX) / itemView.getWidth() * 2);
                     itemView.setAlpha(alpha);
-
-                    // Disegna la card traslata, ma clippata al bordo sinistro originale
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
                     c.restoreToCount(saveCount);

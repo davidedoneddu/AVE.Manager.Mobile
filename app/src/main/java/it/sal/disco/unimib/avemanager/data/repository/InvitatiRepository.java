@@ -62,7 +62,7 @@ public class InvitatiRepository {
 
                             callback.onSuccess(pageData);
                         } catch (Exception e) {
-                            e.printStackTrace();
+
                             callback.onFailure(e);
                         }
                     }).start();
@@ -84,7 +84,7 @@ public class InvitatiRepository {
 
                     callback.onSuccess(pageData);
                 } catch (Exception e) {
-                    e.printStackTrace();
+
                     callback.onFailure(e);
                 }
             }).start();
@@ -103,7 +103,7 @@ public class InvitatiRepository {
                             invitatoDao.update(entity);
                             dataCallback.onSuccess(true);
                         } catch (Exception e) {
-                            e.printStackTrace();
+
                             dataCallback.onFailure(e);
                         }
                     }).start();
@@ -134,7 +134,7 @@ public class InvitatiRepository {
                             invitatoDao.delete(entity);
                             dataCallback.onSuccess(true);
                         } catch (Exception e) {
-                            e.printStackTrace();
+
                             dataCallback.onFailure(e);
                         }
                     }).start();
@@ -165,7 +165,7 @@ public class InvitatiRepository {
                             invitatoDao.insert(entity);
                             dataCallback.onSuccess(true);
                         } catch (Exception e) {
-                            e.printStackTrace();
+
                             dataCallback.onFailure(e);
                         }
                     }).start();
@@ -196,7 +196,7 @@ public class InvitatiRepository {
                     dataCallback.onFailure(new Exception("Invitato non trovato"));
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+
                 dataCallback.onFailure(e);
             }
         }).start();

@@ -25,7 +25,6 @@ public class EditInvitatoFragment extends Fragment {
 
     private FragmentEditInvitatoBinding binding;
     private InvitatiViewModel viewModel;
-    private FragmentStateAdapter pagerAdapter;
 
     @Nullable
     @Override
@@ -48,7 +47,7 @@ public class EditInvitatoFragment extends Fragment {
                 new ConfigurazioniFragment()
         );
 
-        pagerAdapter = new FragmentStateAdapter(this) {
+        FragmentStateAdapter pagerAdapter = new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {

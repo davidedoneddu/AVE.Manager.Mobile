@@ -42,9 +42,6 @@ public class AuthRepository {
         });
     }
 
-    private String loginApi (String token){
-        return "";
-    }
 
     public void logout(DataCallback<String> callback) {
         firebaseDataSource.logout(new DataCallback<String>() {

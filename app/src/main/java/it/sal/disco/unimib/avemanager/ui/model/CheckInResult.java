@@ -13,7 +13,8 @@ public class CheckInResult {
         return nome;
     }
 
-    public String getNomeEvento() {
+
+    public String getDescrizione() {
         return messaggio;
     }
 }

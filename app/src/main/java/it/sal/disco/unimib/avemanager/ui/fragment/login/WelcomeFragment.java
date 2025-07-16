@@ -1,14 +1,11 @@
 package it.sal.disco.unimib.avemanager.ui.fragment.login;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import it.sal.disco.unimib.avemanager.R;
 

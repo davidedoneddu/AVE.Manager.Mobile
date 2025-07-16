@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxInvitato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invitato" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxConfermato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confermato" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxPresente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Presente" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxNonPartecipa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Non Partecipa" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Note"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="3"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etSesso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sesso"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxVotante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Votante" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxPuoEssereSostituito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Può Essere Sostituito" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxPuoInvitare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Può Invitare" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etCarica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Carica"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkboxScrutinatore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scrutinatore" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etExPostoOccupato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ex Posto Occupato"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+</ScrollView>

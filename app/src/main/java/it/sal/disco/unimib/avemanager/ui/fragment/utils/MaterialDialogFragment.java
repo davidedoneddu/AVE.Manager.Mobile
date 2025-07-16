@@ -2,10 +2,6 @@ package it.sal.disco.unimib.avemanager.ui.fragment.utils;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 
 import it.sal.disco.unimib.avemanager.R;
-import it.sal.disco.unimib.avemanager.ui.activity.CheckInActivity;
+import it.sal.disco.unimib.avemanager.ui.fragment.mainactivity.CheckInFragment;
 
 
 public class MaterialDialogFragment extends DialogFragment {
@@ -78,8 +76,13 @@ public class MaterialDialogFragment extends DialogFragment {
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
         // Chiamiamo la funzione di CheckInActivity se è l'host
-        if (getActivity() instanceof CheckInActivity) {
-            ((CheckInActivity) getActivity()).reactivateCheckIn();
+        Fragment fragment = requireActivity()
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.fragmentContainer);
+
+        if (fragment instanceof CheckInFragment) {
+            ((CheckInFragment) fragment).reactivateCheckIn();
         }
+
     }
 }

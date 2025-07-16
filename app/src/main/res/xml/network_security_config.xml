@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.211.61.36</domain>
+    </domain-config>
+</network-security-config>
+<!--DA METTERE IN ANDROID MANIFEST PER IL DEBUG HTTP-->
+    <!--        android:networkSecurityConfig="@xml/network_security_config"-->
+    <!--        android:usesCleartextTraffic="true"-->

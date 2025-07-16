@@ -1,25 +1,22 @@
 package it.sal.disco.unimib.avemanager.ui.fragment.utils;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import it.sal.disco.unimib.avemanager.R;
 
@@ -27,19 +24,19 @@ public class CardEventDataFragment extends Fragment {
 
     private CircularProgressIndicator donutChart;
     private TextView centerText;
-    private TextView votesPresentText, votesTotalText, peoplePresentText, peopleTotalText;
+    private TextView quorumStatusText;
 
     private int votesPresent;
     private int votesTotal;
-    private int peoplePresent;
-    private int peopleTotal;
+    private boolean isQuorumOk;
+    private String quorumDate;
 
-    public static CardEventDataFragment newInstance(int votesPresent, int votesTotal, int peoplePresent, int peopleTotal) {
+    public static CardEventDataFragment newInstance(int votesPresent, int votesTotal, boolean isQuorumOk, String quorumDate) {
         Bundle args = new Bundle();
         args.putInt("votesPresent", votesPresent);
         args.putInt("votesTotal", votesTotal);
-        args.putInt("peoplePresent", peoplePresent);
-        args.putInt("peopleTotal", peopleTotal);
+        args.putBoolean("isQuorumOk", isQuorumOk);
+        args.putString("quorumDate", quorumDate);
         CardEventDataFragment fragment = new CardEventDataFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,8 +48,8 @@ public class CardEventDataFragment extends Fragment {
         if (getArguments() != null) {
             votesPresent = getArguments().getInt("votesPresent");
             votesTotal = getArguments().getInt("votesTotal");
-            peoplePresent = getArguments().getInt("peoplePresent");
-            peopleTotal = getArguments().getInt("peopleTotal");
+            isQuorumOk = getArguments().getBoolean("isQuorumOk");
+            quorumDate = getArguments().getString("quorumDate");
         }
     }
 
@@ -70,13 +67,24 @@ public class CardEventDataFragment extends Fragment {
 
         donutChart = view.findViewById(R.id.donutChart);
         centerText = view.findViewById(R.id.centerText);
-        votesPresentText = view.findViewById(R.id.votesPresentText);
-        votesTotalText = view.findViewById(R.id.votesTotalText);
-        peoplePresentText = view.findViewById(R.id.peoplePresentText);
-        peopleTotalText = view.findViewById(R.id.peopleTotalText);
+        quorumStatusText = view.findViewById(R.id.quorumStatusText);
 
         setupChart();
-        updateText();
+        setupQuorumStatus();
+
+        View container = view.findViewById(R.id.donutChartContainer);
+        container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                int width = container.getWidth();
+                int height = container.getHeight();
+                int size = (int) (Math.min(width, height) * 1f);
+
+                donutChart.setIndicatorSize(size);
+            }
+        });
     }
 
     private void setupChart() {
@@ -90,10 +98,19 @@ public class CardEventDataFragment extends Fragment {
         }
     }
 
-    private void updateText() {
-        votesPresentText.setText("Voti presenti: " + votesPresent);
-        votesTotalText.setText("Voti totali: " + votesTotal);
-        peoplePresentText.setText("Persone presenti: " + peoplePresent);
-        peopleTotalText.setText("Persone totali: " + peopleTotal);
+    private void setupQuorumStatus() {
+        if (isQuorumOk && !TextUtils.isEmpty(quorumDate)) {
+            try {
+                LocalDateTime dateTime = LocalDateTime.parse(quorumDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                String formattedDate = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+
+                quorumStatusText.setText("Quorum raggiunto alle ore " + formattedDate);
+            } catch (DateTimeParseException e) {
+                quorumStatusText.setText("Quorum raggiunto alle ore " + quorumDate);
+            }
+
+        } else {
+            quorumStatusText.setText("Quorum non ancora raggiunto");
+        }
     }
 }

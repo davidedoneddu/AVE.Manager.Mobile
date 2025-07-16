@@ -1,5 +1,7 @@
 package it.sal.disco.unimib.avemanager.ui.viewmodel;
 
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -74,12 +76,13 @@ public class OrganizationViewModel extends ViewModel {
         });
     }
 
-    public void getOrganizationImage(String orgId, DataCallback<String> callback) {
+    public void getOrganizationImage(String orgId, DataCallback<Bitmap> callback) {
+        String fileName = orgId+".png";
         organizationState.setValue(OrganizationState.LOADING);
-        organizationRepository.fetchOrganizationImage(orgId, new DataCallback<String>() {
+        organizationRepository.fetchOrganizationImage(fileName, new DataCallback<Bitmap>() {
             @Override
-            public void onSuccess(String imageUrl) {
-                callback.onSuccess(imageUrl);
+            public void onSuccess(Bitmap image) {
+                callback.onSuccess(image);
                 organizationState.setValue(OrganizationState.SUCCESS);
             }
 

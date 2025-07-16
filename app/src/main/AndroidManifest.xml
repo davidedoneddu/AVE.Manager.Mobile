@@ -20,24 +20,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AVEManagerMobile"
         tools:targetApi="31">
+
         <activity
-            android:name=".ui.activity.EventMainActivity"
+            android:name=".ui.activity.EditInvitatoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.CheckInActivity"
+            android:name=".ui.activity.EventMainActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.EnvironmentSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.LoginPageActivity"
-            android:exported="true">
+            android:name=".ui.activity.SplashCustomActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AVEManagerMobile.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.LoginPageActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

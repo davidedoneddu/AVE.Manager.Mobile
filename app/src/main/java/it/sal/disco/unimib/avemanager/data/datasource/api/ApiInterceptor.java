@@ -43,19 +43,17 @@ public class ApiInterceptor implements Interceptor {
 
         // Se ricevi 401, gestisci la situazione (es. logout o refresh)
         if (response.code() == 401) {
-            // qui puoi chiamare authFailureHandler.onAuthFailure()
             authFailureHandler.onAuthFailure();
         }
 
         return response;
     }
 
-    // Interfaccia per fornire il token (può essere implementata in Repository o ViewModel)
     public interface TokenProvider {
         String getToken();
     }
 
-    // Interfaccia per gestire errore auth (es. logout o refresh)
+
     public interface AuthFailureHandler {
         void onAuthFailure();
     }

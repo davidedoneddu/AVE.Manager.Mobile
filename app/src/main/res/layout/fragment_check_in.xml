@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,6 +25,14 @@
         android:layout_gravity="top|center_horizontal"
         android:layout_marginTop="80dp" />
 
+    <!-- ImageView centrata con dimensioni 200dp x 200dp -->
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/camera_square"
+        android:contentDescription="Angoli stondati con buchi" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -38,22 +45,17 @@
             app:srcCompat="@drawable/ic_arrow_back"
             android:layout_gravity="bottom|start"
             android:layout_margin="16dp" />
-
     </FrameLayout>
 
     <!-- Overlay di caricamento sopra tutto -->
     <FrameLayout
         android:id="@+id/loadingOverlay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="#B3000000"
         android:visibility="gone"
         android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:focusable="true">
 
         <ProgressBar
             android:id="@+id/centerProgressBar"

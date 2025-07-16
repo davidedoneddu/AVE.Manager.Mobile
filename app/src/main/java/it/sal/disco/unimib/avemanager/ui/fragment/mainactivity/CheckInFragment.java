@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,16 +23,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
-import com.google.common.util.concurrent.ListenableFuture;
 
 import java.util.concurrent.ExecutionException;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import it.sal.disco.unimib.avemanager.R;
+import it.sal.disco.unimib.avemanager.ui.activity.EventMainActivity;
 import it.sal.disco.unimib.avemanager.ui.fragment.utils.MaterialDialogFragment;
 import it.sal.disco.unimib.avemanager.ui.viewmodel.CheckInViewModel;
 
@@ -48,12 +50,28 @@ public class CheckInFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Transizione asse X (orizzontale)
-        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.X, true));  // entra da destra
-        setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.X, false)); // torna a sinistra
+        MaterialSharedAxis enter = new MaterialSharedAxis(MaterialSharedAxis.Y, false);
+        enter.setDuration(400); // in millisecondi
+        enter.setInterpolator(new AccelerateDecelerateInterpolator()); // oppure FastOutSlowInInterpolator
 
-        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.X, true));    // esce a sinistra quando si va avanti
-        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.X, false)); // rientra da destra
+        MaterialSharedAxis returnTrans = new MaterialSharedAxis(MaterialSharedAxis.Y, true);
+        returnTrans.setDuration(400);
+        returnTrans.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        setEnterTransition(enter);
+        setReturnTransition(returnTrans);
+
+        MaterialSharedAxis exit = new MaterialSharedAxis(MaterialSharedAxis.Y, false);
+        exit.setDuration(400);
+        exit.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        MaterialSharedAxis reenter = new MaterialSharedAxis(MaterialSharedAxis.Y, true);
+        reenter.setDuration(400);
+        reenter.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        setExitTransition(exit);
+        setReenterTransition(reenter);
+
     }
 
     @Nullable
@@ -73,10 +91,7 @@ public class CheckInFragment extends Fragment {
 
         backButton.setEnabled(false);
         backButton.setOnClickListener(v -> {
-            // Torna indietro nel fragment stack o fai finish dell'activity se serve
-            if (getActivity() != null) {
-                getActivity().finish();
-            }
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
         backButton.setEnabled(true);
 
@@ -87,9 +102,10 @@ public class CheckInFragment extends Fragment {
                 MaterialDialogFragment dialog = MaterialDialogFragment.newInstance(
                         true,
                         "Check-in riuscito",
-                        "Utente: " + result.getNomeUtente()
+                        "Utente:\n" + result.getNomeUtente() + "\n\n" + result.getDescrizione()
                 );
                 dialog.show(getParentFragmentManager(), "CheckInSuccess");
+                viewModel.resetCheckInResult();
             }
         });
 
@@ -148,7 +164,6 @@ public class CheckInFragment extends Fragment {
                     }
 
                     if (!foundCode) {
-                        // Se non trovi codice valido sblocca
                         isProcessing = false;
                     }
                 })
@@ -157,6 +172,14 @@ public class CheckInFragment extends Fragment {
                     isProcessing = false;
                 })
                 .addOnCompleteListener(task -> image.close());
+    }
+
+    @Override
+    public void onStop() {
+        if (getActivity() instanceof EventMainActivity) {
+            ((EventMainActivity) getActivity()).closeFullScreen();
+        }
+        super.onStop();
     }
 
     public void reactivateCheckIn() {

@@ -1,7 +1,5 @@
 package it.sal.disco.unimib.avemanager.ui.adapter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import it.sal.disco.unimib.avemanager.R;
-import it.sal.disco.unimib.avemanager.ui.activity.EventMainActivity;
 import it.sal.disco.unimib.avemanager.ui.model.Evento;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
     private final List<Evento> eventList;
     private final OnItemClickListener listener;
+
 
     public interface OnItemClickListener {
         void onItemClick(Evento event);
@@ -44,12 +42,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.titleTextView.setText(event.getName());
         holder.descriptionTextView.setText(event.getDescription());
 
-        holder.itemView.setOnClickListener(v -> {
-            Context context = v.getContext();
-            Intent intent = new Intent(context, EventMainActivity.class);
-
-            context.startActivity(intent);
-        });
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(event));
     }
 
     @Override

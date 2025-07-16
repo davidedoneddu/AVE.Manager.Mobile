@@ -10,11 +10,14 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import it.sal.disco.unimib.avemanager.data.repository.EventRepository;
+import it.sal.disco.unimib.avemanager.ui.model.EventData;
 import it.sal.disco.unimib.avemanager.ui.model.Evento;
 import it.sal.disco.unimib.avemanager.util.DataCallback;
 
 @HiltViewModel
 public class EventViewModel extends ViewModel {
+
+
 
     public enum EventState { IDLE, LOADING, SUCCESS, ERROR }
 
@@ -74,5 +77,6 @@ public class EventViewModel extends ViewModel {
         });
     }
 
-
+    public void fetchEventData(DataCallback<EventData> dataCallback) {
+    }
 }

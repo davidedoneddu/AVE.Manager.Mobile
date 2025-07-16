@@ -15,6 +15,8 @@ public class LoginViewModel extends ViewModel {
 
     public enum LoginState { IDLE, LOADING, SUCCESS, ERROR }
     private final MutableLiveData<LoginState> loginState = new MutableLiveData<>(LoginState.IDLE);
+    public enum LogoutState { IDLE, LOADING, SUCCESS, ERROR }
+    private final MutableLiveData<LogoutState> logoutState = new MutableLiveData<>(LogoutState.IDLE);
     private final AuthRepository authRepository;
 
     @Inject
@@ -25,6 +27,9 @@ public class LoginViewModel extends ViewModel {
     public LiveData<LoginState> getLoginState() {
         return loginState;
     }
+    public LiveData<LogoutState> getLogoutState() {
+        return logoutState;
+    }
 
     public void login(String email, String password) {
         loginState.setValue(LoginState.LOADING);
@@ -32,7 +37,7 @@ public class LoginViewModel extends ViewModel {
         authRepository.login(email, password, new DataCallback<String>() {
             @Override
             public void onSuccess(String token) {
-                // Puoi salvare il token qui se vuoi (SharedPreferences o DataStore)
+
                 loginState.postValue(LoginState.SUCCESS);
             }
 
@@ -42,4 +47,22 @@ public class LoginViewModel extends ViewModel {
             }
         });
     }
+    public void logout() {
+        logoutState.setValue(LogoutState.LOADING);
+
+        authRepository.logout(new DataCallback<String>() {
+            @Override
+            public void onSuccess(String response) {
+
+                logoutState.postValue(LogoutState.SUCCESS);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                logoutState.postValue(LogoutState.ERROR);
+            }
+        });
+    }
+
+
 }

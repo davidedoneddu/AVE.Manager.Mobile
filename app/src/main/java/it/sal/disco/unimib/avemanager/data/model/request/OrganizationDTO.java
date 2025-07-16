@@ -1,14 +1,15 @@
-package it.sal.disco.unimib.avemanager.data.model;
+package it.sal.disco.unimib.avemanager.data.model.request;
 
-public class OrganizationDto {
+public class OrganizationDTO {
     private String ORG_ID;
     private String ORG_NAME = "";
+    private boolean ORG_ACTIVE;
 
     // Costruttore vuoto (necessario per librerie di serializzazione come Gson o Jackson)
-    public OrganizationDto() {}
+    public OrganizationDTO() {}
 
     // Costruttore con parametri
-    public OrganizationDto(String ORG_ID, String ORG_NAME) {
+    public OrganizationDTO(String ORG_ID, String ORG_NAME) {
         this.ORG_ID = ORG_ID;
         this.ORG_NAME = ORG_NAME;
     }
@@ -37,5 +38,13 @@ public class OrganizationDto {
                 "ORG_ID='" + ORG_ID + '\'' +
                 ", ORG_NAME='" + ORG_NAME + '\'' +
                 '}';
+    }
+
+    public boolean isORG_ACTIVE() {
+        return ORG_ACTIVE;
+    }
+
+    public void setORG_ACTIVE(boolean ORG_ACTIVE) {
+        this.ORG_ACTIVE = ORG_ACTIVE;
     }
 }

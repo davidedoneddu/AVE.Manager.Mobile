@@ -2,6 +2,7 @@ package it.sal.disco.unimib.avemanager.data.repository;
 
 import it.sal.disco.unimib.avemanager.data.datasource.api.ApiDataSource;
 import it.sal.disco.unimib.avemanager.data.datasource.firebase.FirebaseDataSource;
+import it.sal.disco.unimib.avemanager.data.model.response.BaseResponseDTO;
 import it.sal.disco.unimib.avemanager.util.DataCallback;
 
 public class AuthRepository {
@@ -17,21 +18,18 @@ public class AuthRepository {
      * Login con user e password Firebase, poi chiama la API con il token Firebase
      */
     public void login(String email, String password, DataCallback<String> callback) {
-        // 1. Login su Firebase
         firebaseDataSource.login(email, password, new DataCallback<String>() {
             @Override
             public void onSuccess(String firebaseToken) {
-                // 2. Login su API con il token Firebase ricevuto
                 apiDataSource.login(firebaseToken, new DataCallback<String>() {
                     @Override
                     public void onSuccess(String backendToken) {
-                        // Successo completo: ritorna token backend
+
                         callback.onSuccess(backendToken);
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
-                        // Errore login API
                         callback.onFailure(t);
                     }
                 });
@@ -39,7 +37,6 @@ public class AuthRepository {
 
             @Override
             public void onFailure(Throwable t) {
-                // Errore login Firebase
                 callback.onFailure(t);
             }
         });
@@ -47,5 +44,35 @@ public class AuthRepository {
 
     private String loginApi (String token){
         return "";
+    }
+
+    public void logout(DataCallback<String> callback) {
+        firebaseDataSource.logout(new DataCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                apiDataSource.logout(new DataCallback<BaseResponseDTO>() {
+                    @Override
+                    public void onSuccess(BaseResponseDTO result) {
+                        if(!result.isOk()){
+                            callback.onFailure(new Exception(result.getErrorMessage()));
+                        }
+                        callback.onSuccess(result.getResponseMessage());
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        callback.onFailure(t);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onFailure(t);
+            }
+        });
+
+
     }
 }

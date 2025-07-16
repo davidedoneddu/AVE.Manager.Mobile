@@ -1,5 +1,9 @@
 <resources>
-    <style name="Theme.AVEManagerMobile" parent="Theme.Material3.Light.NoActionBar">
+     <style name="Theme.AVEManagerMobile" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+
         <item name="colorSuccess">@color/md_theme_success</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
@@ -54,5 +58,25 @@
 
         <item name="android:fontFamily">@font/lato</item>
         <item name="fontFamily">@font/lato</item>
+
+     </style>
+
+    <style name="CircularFabShape" parent="">
+        <item name="cornerSize">50%</item>
     </style>
+
+    <style name="CircularFabStyle" parent="Widget.Material3.FloatingActionButton.Secondary">
+
+
+
+        <!-- Forma circolare -->
+        <item name="shapeAppearanceOverlay">@style/CircularFabShape</item>
+
+        <!-- Icon padding -->
+        <item name="iconSize">12dp</item>
+        <item name="fabSize">mini</item>
+    </style>
+
+
+
 </resources>

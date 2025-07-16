@@ -14,6 +14,8 @@ import it.sal.disco.unimib.avemanager.util.DataCallback;
 @HiltViewModel
 public class CheckInViewModel extends ViewModel {
 
+
+
     public enum CheckInState { IDLE, LOADING, SUCCESS, ERROR }
 
     private final MutableLiveData<CheckInState> checkInState = new MutableLiveData<>(CheckInState.IDLE);
@@ -34,6 +36,11 @@ public class CheckInViewModel extends ViewModel {
     public void checkInWithQr(String qrCode) {
         checkInState.postValue(CheckInState.LOADING);
 
+        if(qrCode.isEmpty()){
+            errorMessage.postValue("Il codice utente per il check in non è valido");
+            checkInState.postValue(CheckInState.ERROR);
+            return;
+        }
         repository.checkInWithQr(qrCode, new DataCallback<CheckInResult>() {
             @Override
             public void onSuccess(CheckInResult result) {
@@ -49,5 +56,7 @@ public class CheckInViewModel extends ViewModel {
         });
     }
 
-
+    public void resetCheckInResult() {
+        checkInResult.postValue(null);
+    }
 }

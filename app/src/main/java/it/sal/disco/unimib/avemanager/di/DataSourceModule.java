@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import it.sal.disco.unimib.avemanager.data.datasource.api.ApiDataSource;
 import it.sal.disco.unimib.avemanager.data.datasource.api.ApiService;
+import it.sal.disco.unimib.avemanager.data.datasource.api.TokenProvider;
 import it.sal.disco.unimib.avemanager.data.datasource.firebase.FirebaseDataSource;
 
 @Module
@@ -22,7 +23,7 @@ public class DataSourceModule {
 
     @Provides
     @Singleton
-    public static ApiDataSource provideApiDataSource(ApiService apiService) {
-        return new ApiDataSource(apiService); // idem
+    public static ApiDataSource provideApiDataSource(ApiService apiService, TokenProvider tokenProvider) {
+        return new ApiDataSource(apiService, tokenProvider); // idem
     }
 }

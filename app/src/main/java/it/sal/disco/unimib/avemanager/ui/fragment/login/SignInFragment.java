@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -19,7 +18,6 @@ import androidx.lifecycle.ViewModelProvider;
 import dagger.hilt.android.AndroidEntryPoint;
 import it.sal.disco.unimib.avemanager.R;
 import it.sal.disco.unimib.avemanager.ui.activity.EnvironmentSelectionActivity;
-import it.sal.disco.unimib.avemanager.ui.activity.MainActivity;
 import it.sal.disco.unimib.avemanager.ui.viewmodel.LoginViewModel;
 
 @AndroidEntryPoint
@@ -69,8 +67,31 @@ public class SignInFragment extends Fragment {
         });
 
         buttonLogin.setOnClickListener(v -> {
-            String username = editTextName.getText().toString();
-            String password = editTextPassword.getText().toString();
+            String username = editTextName.getText().toString().trim();
+            String password = editTextPassword.getText().toString().trim();
+
+            boolean hasError = false;
+
+            if (username.isEmpty()) {
+                editTextName.setError("Inserisci la tua email");
+                hasError = true;
+            } else {
+                editTextName.setError(null);
+            }
+
+            if (password.isEmpty()) {
+                editTextPassword.setError("Inserisci la password");
+                hasError = true;
+            } else {
+                editTextPassword.setError(null);
+            }
+
+            if (hasError) {
+                Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Tutto ok, effettua il login
             loginViewModel.login(username, password);
         });
 

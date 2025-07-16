@@ -9,5 +9,14 @@
 
     <string name="work_in_progress">Lavori in corso</string>
     <string name="work_in_progress_message">Questa funzionalità sarà presente nelle versioni successive.</string>
+    <string name="logout">Logout</string>
+    <string name="nome_evento">Nome Evento</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="nome_organizzazione">Nome Organizzazione</string>
+    <string name="aggiungi_invitato">Aggiungi Invitato</string>
+    <string name="cerca_invitato">Cerca invitato</string>
+    <string name="card_3_title">Voti</string>
+    <string name="card_2_title">Votanti</string>
+    <string name="card_1_title">Invitati</string>
 
 </resources>

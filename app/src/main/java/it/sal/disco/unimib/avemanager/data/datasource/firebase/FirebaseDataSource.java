@@ -3,16 +3,7 @@ package it.sal.disco.unimib.avemanager.data.datasource.firebase;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
-import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -43,49 +34,39 @@ public class FirebaseDataSource {
                                         } else {
                                             Exception e = tokenTask.getException();
                                             Log.e("FirebaseDataSource", "Errore nel getIdToken: " + (e != null ? e.getMessage() : "null"), e);
-                                            //callback.onFailure(e);
-                                            callback.onSuccess(UUID.randomUUID().toString());
+                                            callback.onFailure(e);
+
                                         }
                                     });
                         } else {
                             Exception e = new Exception("Utente autenticato ma getCurrentUser() è null");
                             Log.e("FirebaseDataSource", e.getMessage());
-                            //callback.onFailure(e);
-                            callback.onSuccess(UUID.randomUUID().toString());
+                            callback.onFailure(e);
                         }
                     } else {
                         Exception e = task.getException();
                         Log.e("FirebaseDataSource", "Errore login: " + (e != null ? e.getMessage() : "null"), e);
-                        //callback.onFailure(e);
-                        callback.onSuccess(UUID.randomUUID().toString());
+                        callback.onFailure(e);
                     }
                 });
     }
 
 
-    // Recupera URL immagine organizzazione da Firebase Storage
-    public void getOrganizationImageUrl(String orgId, final DataCallback<String> callback) {
-        StorageReference imageRef = storage.getReference().child("organizations/" + orgId + ".png");
+    public void logout(DataCallback<String> dataCallback) {
+        try {
+            auth.signOut();
 
-        imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<android.net.Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<android.net.Uri> task) {
-                if (task.isSuccessful()) {
-                    // URL ottenuto
-                    callback.onSuccess(task.getResult().toString());
-                } else {
-                    // Errore nel recuperare URL
-                    callback.onFailure(task.getException());
-                }
+            if (auth.getCurrentUser() == null) {
+                dataCallback.onSuccess("Logout effettuato con successo");
+            } else {
+                dataCallback.onFailure(new Exception("L'utente è ancora autenticato"));
             }
-        });
+        } catch (Exception e) {
+            Log.e("FirebaseDataSource", "Errore durante il logout: " + e.getMessage(), e);
+            dataCallback.onFailure(e);
+        }
     }
 
 
-    // Interfaccia callback per recupero URL immagine
-    public interface FirebaseStorageCallback {
-        void onSuccess(String imageUrl);
-        void onFailure(Throwable t);
-    }
 }
 

@@ -1,0 +1,78 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Angolo superiore sinistro -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="
+            M0,30
+            L0,10
+            A10,10 0 0 1 10,0
+            L60,0"/>
+
+    <!-- Angolo superiore destro -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="
+            M140,0
+            L190,0
+            A10,10 0 0 1 200,10
+            L200,30"/>
+
+    <!-- Angolo inferiore sinistro -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="
+            M0,170
+            L0,190
+            A10,10 0 0 0 10,200
+            L60,200"/>
+
+    <!-- Angolo inferiore destro -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="
+            M140,200
+            L190,200
+            A10,10 0 0 0 200,190
+            L200,170"/>
+
+    <!-- Linea sinistra superiore -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M0,30 L0,80"/>
+
+    <!-- Linea sinistra inferiore -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M0,120 L0,170"/>
+
+    <!-- Linea destra superiore -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M200,30 L200,80"/>
+
+    <!-- Linea destra inferiore -->
+    <path
+        android:strokeColor="@color/md_theme_primaryContainer_mediumContrast"
+        android:strokeWidth="4"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M200,120 L200,170"/>
+</vector>

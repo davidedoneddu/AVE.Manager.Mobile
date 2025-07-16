@@ -1,9 +1,9 @@
-package it.sal.disco.unimib.avemanager.data.model;
+package it.sal.disco.unimib.avemanager.data.model.request;
 
-public class FirebaseTokenRequestDto {
+public class FirebaseTokenRequestDTO {
     private String IdToken;
 
-    public FirebaseTokenRequestDto(String firebaseToken) {
+    public FirebaseTokenRequestDTO(String firebaseToken) {
         this.IdToken = firebaseToken;
     }
 

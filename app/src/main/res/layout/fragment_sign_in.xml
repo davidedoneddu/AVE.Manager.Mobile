@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_in_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.LoginPageActivity">
+
+    <!-- Guideline verticale margine sinistro a 5% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <!-- Guideline verticale margine destro a 95% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <!-- Guideline orizzontale margine superiore logo a 1% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.01" />
+
+    <!-- Guideline orizzontale margine inferiore logo a 20% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <!-- Guideline orizzontale margine superiore login box a 40% -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <!-- Background image -->
+    <ImageView
+        android:id="@+id/image_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sign_in_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Overlay blu semitrasparente -->
+    <View
+        android:id="@+id/blue_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#80004388"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Contenitore logo centrato con margine top da guideline -->
+    <FrameLayout
+        android:id="@+id/logo_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintTop_toTopOf="@id/guideline_top_logo"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom_logo"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintDimensionRatio="H,713:198"> <!-- Adatta il rapporto al tuo logo -->
+
+        <!-- Radial underlay -->
+
+        <ImageView
+            android:id="@+id/radial_underlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/radial_underlay" />
+        <!-- Logo sopra -->
+        <ImageView
+            android:id="@+id/text_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/logo_welcome" />
+
+    </FrameLayout>
+
+
+    <!-- Contenitore verticale input centrato con margine top a 5% dopo logo -->
+    <!-- Contenitore verticale input centrato con margine top -->
+    <LinearLayout
+        android:id="@+id/input_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top_box"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="8dp">
+
+        <!-- Label NAME -->
+        <TextView
+            android:id="@+id/labelName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NAME"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="12sp"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold" />
+
+        <!-- Input NAME -->
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Username"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="@color/md_theme_onPrimary_semiTransparent"
+            android:background="@drawable/bg_input_transparent"
+            android:paddingHorizontal="16dp"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Label PASSWORD -->
+        <TextView
+            android:id="@+id/labelPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PASSWORD"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="12sp"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold" />
+
+        <!-- Input PASSWORD with toggle -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="••••••••"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnPrimary"
+                android:textColorHint="@color/md_theme_onPrimary_semiTransparent"
+                android:background="@drawable/bg_input_transparent"
+                android:paddingHorizontal="16dp"
+                android:inputType="textPassword"
+                android:paddingEnd="48dp" />
+
+            <ImageView
+                android:id="@+id/toggle_password"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_visibility_off"
+                android:contentDescription="Show password" />
+        </RelativeLayout>
+
+        <!-- Button LOGIN -->
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Log In"
+            android:textAllCaps="false"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif-medium" />
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/buttonLogin"-->
+<!--            app:layout_constraintStart_toStartOf="@id/input_container"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/input_container">-->
+
+<!--            &lt;!&ndash; Google Sign-In Button &ndash;&gt;-->
+<!--            <com.google.android.gms.common.SignInButton-->
+<!--                android:id="@+id/btnSignInGoogle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/buttonLogin"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                />-->
+
+<!--            &lt;!&ndash; Microsoft Sign-In Button &ndash;&gt;-->
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/btnSignInMicrosoft"-->
+<!--                style="@style/Widget.Material3.Button.OutlinedButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:icon="@drawable/ic_microsoft_logo"-->
+<!--                app:iconSize="20dp"-->
+<!--                app:iconPadding="8dp"-->
+<!--                android:text="@string/sign_in_with_microsoft"-->
+<!--                android:layout_gravity="center" />-->
+<!--        </LinearLayout>-->
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#B3000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+    <!-- Loader centrale -->
+        <ProgressBar
+            android:id="@+id/centerProgressBar"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

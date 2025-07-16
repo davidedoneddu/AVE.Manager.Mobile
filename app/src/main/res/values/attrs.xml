@@ -1,0 +1,7 @@
+<resources>
+    <attr name="colorFocus" format="color" />
+    <attr name="colorOnFocus" format="color" />
+    <attr name="colorFocusContainer" format="color" />
+    <attr name="colorOnFocusContainer" format="color" />
+    <attr name="colorSuccess" format="color" />
+</resources>

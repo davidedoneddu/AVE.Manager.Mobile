@@ -1,0 +1,123 @@
+package it.sal.disco.unimib.avemanager.ui.fragment.login;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import it.sal.disco.unimib.avemanager.R;
+import it.sal.disco.unimib.avemanager.ui.activity.EnvironmentSelectionActivity;
+import it.sal.disco.unimib.avemanager.ui.viewmodel.LoginViewModel;
+
+@AndroidEntryPoint
+public class SignInFragment extends Fragment {
+
+    private EditText editTextName;
+    private EditText editTextPassword;
+    private FrameLayout loadingOverlay;
+
+    private LoginViewModel loginViewModel;
+
+    public SignInFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+
+        editTextName = view.findViewById(R.id.editTextName);
+        editTextPassword = view.findViewById(R.id.editTextPassword);
+        Button buttonLogin = view.findViewById(R.id.buttonLogin);
+        loadingOverlay = view.findViewById(R.id.loadingOverlay);
+
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        loginViewModel.getLoginState().observe(getViewLifecycleOwner(), state -> {
+            switch (state) {
+                case SUCCESS:
+                    // Login avvenuto con successo
+                    loadingOverlay.setVisibility(View.GONE);
+                    Intent intent = new Intent(getActivity(), EnvironmentSelectionActivity.class);
+                    startActivity(intent);
+                    requireActivity().finish();
+                    break;
+                case ERROR:
+                    loadingOverlay.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                    break;
+                case LOADING:
+                    loadingOverlay.setVisibility(View.VISIBLE);
+                    break;
+            }
+        });
+
+        buttonLogin.setOnClickListener(v -> {
+            String username = editTextName.getText().toString().trim();
+            String password = editTextPassword.getText().toString().trim();
+
+            boolean hasError = false;
+
+            if (username.isEmpty()) {
+                editTextName.setError("Inserisci la tua email");
+                hasError = true;
+            } else {
+                editTextName.setError(null);
+            }
+
+            if (password.isEmpty()) {
+                editTextPassword.setError("Inserisci la password");
+                hasError = true;
+            } else {
+                editTextPassword.setError(null);
+            }
+
+            if (hasError) {
+                Toast.makeText(getContext(), "Compila tutti i campi", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Tutto ok, effettua il login
+            loginViewModel.login(username, password);
+        });
+
+
+        EditText editTextPassword = view.findViewById(R.id.editTextPassword);
+        ImageView togglePassword = view.findViewById(R.id.toggle_password);
+
+        togglePassword.setOnClickListener(new View.OnClickListener() {
+            private boolean isPasswordVisible = false;
+
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    // Nascondi password
+                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    togglePassword.setImageResource(R.drawable.ic_visibility_off);
+                    isPasswordVisible = false;
+                } else {
+                    // Mostra password
+                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    togglePassword.setImageResource(R.drawable.ic_visibility);
+                    isPasswordVisible = true;
+                }
+                // Mantieni il cursore alla fine del testo
+                editTextPassword.setSelection(editTextPassword.getText().length());
+            }
+        });
+        return view;
+    }
+}

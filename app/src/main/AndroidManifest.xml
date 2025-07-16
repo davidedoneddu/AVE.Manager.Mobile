@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
+        android:name=".AveManagerApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,15 +20,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AVEManagerMobile"
         tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".ui.activity.EditInvitatoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.EventMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.EnvironmentSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.SplashCustomActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AVEManagerMobile.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.LoginPageActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

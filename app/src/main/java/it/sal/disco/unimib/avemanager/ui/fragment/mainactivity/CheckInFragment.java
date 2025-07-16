@@ -1,0 +1,185 @@
+package it.sal.disco.unimib.avemanager.ui.fragment.mainactivity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ExperimentalGetImage;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.transition.MaterialSharedAxis;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
+
+import java.util.concurrent.ExecutionException;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import it.sal.disco.unimib.avemanager.R;
+import it.sal.disco.unimib.avemanager.ui.activity.EventMainActivity;
+import it.sal.disco.unimib.avemanager.ui.fragment.utils.MaterialDialogFragment;
+import it.sal.disco.unimib.avemanager.ui.viewmodel.CheckInViewModel;
+
+@AndroidEntryPoint
+public class CheckInFragment extends Fragment {
+
+    private PreviewView previewView;
+    private CheckInViewModel viewModel;
+    private boolean isProcessing = false;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        MaterialSharedAxis enter = new MaterialSharedAxis(MaterialSharedAxis.Y, false);
+        enter.setDuration(400); // in millisecondi
+        enter.setInterpolator(new AccelerateDecelerateInterpolator()); // oppure FastOutSlowInInterpolator
+
+        MaterialSharedAxis returnTrans = new MaterialSharedAxis(MaterialSharedAxis.Y, true);
+        returnTrans.setDuration(400);
+        returnTrans.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        setEnterTransition(enter);
+        setReturnTransition(returnTrans);
+
+        MaterialSharedAxis exit = new MaterialSharedAxis(MaterialSharedAxis.Y, false);
+        exit.setDuration(400);
+        exit.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        MaterialSharedAxis reenter = new MaterialSharedAxis(MaterialSharedAxis.Y, true);
+        reenter.setDuration(400);
+        reenter.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        setExitTransition(exit);
+        setReenterTransition(reenter);
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_check_in, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        previewView = view.findViewById(R.id.previewView);
+        FloatingActionButton backButton = view.findViewById(R.id.backButton);
+
+        backButton.setEnabled(false);
+        backButton.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
+        backButton.setEnabled(true);
+
+        viewModel = new ViewModelProvider(this).get(CheckInViewModel.class);
+
+        viewModel.getCheckInResult().observe(getViewLifecycleOwner(), result -> {
+            if (result != null) {
+                MaterialDialogFragment dialog = MaterialDialogFragment.newInstance(
+                        true,
+                        "Check-in riuscito",
+                        "Utente:\n" + result.getNomeUtente() + "\n\n" + result.getDescrizione()
+                );
+                dialog.show(getParentFragmentManager(), "CheckInSuccess");
+                viewModel.resetCheckInResult();
+            }
+        });
+
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                MaterialDialogFragment dialog = MaterialDialogFragment.newInstance(false, "Errore", message);
+                dialog.show(getParentFragmentManager(), "CheckInError");
+            }
+        });
+
+        setupCamera();
+    }
+
+    private void setupCamera() {
+        BarcodeScanner scanner = BarcodeScanning.getClient();
+        ListenableFuture<ProcessCameraProvider> future = ProcessCameraProvider.getInstance(requireContext());
+        future.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = future.get();
+                Preview preview = new Preview.Builder().build();
+                preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+                ImageAnalysis analysis = new ImageAnalysis.Builder().build();
+                analysis.setAnalyzer(ContextCompat.getMainExecutor(requireContext()), image -> processImage(scanner, image));
+
+                cameraProvider.unbindAll();
+                cameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, analysis);
+
+            } catch (ExecutionException | InterruptedException ignored) {
+
+            }
+        }, ContextCompat.getMainExecutor(requireContext()));
+    }
+
+    @OptIn(markerClass = ExperimentalGetImage.class)
+    private void processImage(BarcodeScanner scanner, ImageProxy image) {
+        if (image.getImage() == null || isProcessing) {
+            image.close();
+            return;
+        }
+
+        isProcessing = true;
+
+        InputImage input = InputImage.fromMediaImage(image.getImage(), image.getImageInfo().getRotationDegrees());
+
+        scanner.process(input)
+                .addOnSuccessListener(barcodes -> {
+                    boolean foundCode = false;
+                    for (Barcode barcode : barcodes) {
+                        String code = barcode.getRawValue();
+                        if (code != null) {
+                            foundCode = true;
+                            viewModel.checkInWithQr(code);
+                            break;
+                        }
+                    }
+
+                    if (!foundCode) {
+                        isProcessing = false;
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("CheckIn", "Errore lettura QR", e);
+                    isProcessing = false;
+                })
+                .addOnCompleteListener(task -> image.close());
+    }
+
+    @Override
+    public void onStop() {
+        if (getActivity() instanceof EventMainActivity) {
+            ((EventMainActivity) getActivity()).closeFullScreen();
+        }
+        super.onStop();
+    }
+
+    public void reactivateCheckIn() {
+        isProcessing = false;
+    }
+}

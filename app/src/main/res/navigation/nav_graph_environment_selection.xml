@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/selectEnvironmentFragment">
+
+    <fragment
+        android:id="@+id/selectEnvironmentFragment"
+        android:name="it.sal.disco.unimib.avemanager.ui.fragment.environmentselection.OrganizationSelectionFragment"
+        android:label="Select Environment">
+        <action
+            android:id="@+id/action_to_selectEvent"
+            app:destination="@id/selectEventFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectEventFragment"
+        android:name="it.sal.disco.unimib.avemanager.ui.fragment.environmentselection.EventSelectionFragment"
+        android:label="Select Event" />
+</navigation>

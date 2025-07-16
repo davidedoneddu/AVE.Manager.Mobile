@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/voteCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+    app:cardBackgroundColor="@color/md_theme_primaryContainer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/voteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quorum"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/donutChartContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
+            android:minHeight="150dp">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/donutChart"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:padding="3dp"
+                app:indicatorSize="150dp"
+                app:trackThickness="14dp"
+                app:trackColor="?attr/colorOnPrimary"
+                app:indicatorColor="?attr/colorPrimary"
+                android:progress="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/centerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_0"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@id/donutChart"
+                app:layout_constraintBottom_toBottomOf="@id/donutChart"
+                app:layout_constraintStart_toStartOf="@id/donutChart"
+                app:layout_constraintEnd_toEndOf="@id/donutChart" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/quorumStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="13sp"
+            android:maxLines="2"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/stato_del_quorum" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
